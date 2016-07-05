@@ -109,6 +109,20 @@ uint64_t Scan(string s){
         for (int i=0; i<(s.size())/2; i++){
             string bytechar = s.substr(2*i,2);
             if (bytechar.compare("??") != 0){
+                if (bytechar.substr(1,1).compare("?") == 0){
+                    char byte[2];
+                    int out;
+                    out = sprintf(byte, "%x",buffer[i+j]);
+                    string bytebuffer (byte);
+                    if (bytebuffer.length()==1){
+                        bytebuffer = "0"+bytebuffer;
+                    }
+                    //cout << bytebuffer << endl;
+                    if (bytechar.substr(0,1).compare(bytebuffer.substr(0,1))!=0){
+                        flag=false;
+                        break;
+                    }
+                }
                 uint8_t byte = std::stoi(bytechar, NULL,16);
                 if (byte != buffer[j+i]){
                     flag = false;
