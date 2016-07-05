@@ -22,9 +22,9 @@ uint8_t * buffer;
 // define global patterns
 ////
 
-string LocalPlayer = "48 39 DF 74 ?? 48 85 FF 74 ?? 48 89 DE E8 ?? ?? ?? ?? EB ??";
-string EntityList = "55 48 89 E5 41 56 53 48 89 FB BE ?? 00 00 00 E8 ?? ?? ?? ?? 8B ?? ?? ?? ?? ?? 83 F8 FF";
-string Glow = "48 C7 ?? ?? E? 2E 05 ?? ?? ?? ?? 48 8D ?? ?? ?? ?? ?? 48 8D ?? ?? ?? ?? ?? E8";
+string LocalPlayer = "4839DF74??4885FF74??4889DEE8????????EB??";
+string EntityList = "554889E54156534889FBBE??000000E8????????8B??????????83F8FF";
+string Glow = "48C7????E?2E05????????488D??????????488D??????????E8";
 ////
 // copy client.dylib to our program memory
 ////
@@ -102,13 +102,29 @@ void ClientToBuffer() {
 }
 
 uint64_t Scan(string s){
-    
+    stringstream ss;
+    bool flag = true;
+    for (int j=0;j<(SizeClient-(s.size())/2 + 1);j++){
+        flag = true;
+        for (int i=0; i<(s.size())/2; i++){
+            string bytechar = s.substr(2*i,2);
+            if (bytechar.compare("??") != 0){
+                uint8_t byte = std::stoi(bytechar, NULL,16);
+                if (byte != buffer[j+i]){
+                    flag = false;
+                    break;
+                }
+            }
+        }
+        if (flag){
+            return (Client+j);
+        }
+    }
+    return 0;
 }
 
 
-////
-// search for patterns and get offsets
-////
+
 
 
 
@@ -116,6 +132,11 @@ int main(int argc, const char * argv[]) {
     // insert code here...
     ClientToBuffer();
     printf("%x\n",buffer[0]);
-    printf("%d\n", sizeof(char));
+    printf("%llx\n",Scan(LocalPlayer));
+    printf("%llx\n",Scan(EntityList));
+    printf("%llx\n",Scan(Glow));
+    uint8_t test = 0x1e ;
+    string conv = std::to_string(test);
+    cout << conv << endl;
     return 0;
 }
