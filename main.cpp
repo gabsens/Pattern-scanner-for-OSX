@@ -1,4 +1,3 @@
-//90% finished
 #include <cstdio>
 #include <cstdlib>
 #include <iostream>
@@ -117,9 +116,7 @@ uint64_t Scan(string s){
                     if (bytebuffer.length()==1){
                         bytebuffer = "0"+bytebuffer;
                     }
-                    //cout << bytebuffer << endl;
                     if (bytechar.substr(0,1).compare(bytebuffer.substr(0,1))!=0){
-                        //cout << bytechar << bytebuffer << endl;
                         flag=false;
                         break;
                     }
@@ -147,12 +144,18 @@ uint64_t Scan(string s){
 int main(int argc, const char * argv[]) {
     // insert code here...
     ClientToBuffer();
-    printf("%x\n",buffer[0]);
-    printf("%llx\n",Scan(LocalPlayer));
-    printf("%llx\n",Scan(EntityList));
-    printf("%llx\n",Scan(Glow));
-    uint8_t test = 0x1e ;
-    string conv = std::to_string(test);
-    cout << conv << endl;
+    uint64_t LocalPlayerArr=Scan(LocalPlayer);
+    uint64_t EntityArr=Scan(EntityList);
+    uint64_t GlowArr=Scan(Glow);
+    uint32_t int1 = (int)*((int*)(LocalPlayerArr-Client+buffer + 0x17));
+    LocalPlayerArr = LocalPlayerArr + 0x1F + int1 - Client;
+    printf("%llx\n",LocalPlayerArr);
+    uint32_t int2 = (int)*((int*)(EntityArr-Client+buffer + 0x22));
+    uint64_t int3 = (uint64_t) *(uint64_t *)(EntityArr-Client+buffer + 0x26 + int2);
+    EntityArr = int3 + 0x8 + 0x20 -Client;
+    printf("%llx\n",EntityArr);
+    uint32_t int4 = (int)*((int*)(GlowArr-Client+buffer + 0x2D));
+    GlowArr = GlowArr + 0x31 + int4 - Client;
+    printf("%llx\n",GlowArr);
     return 0;
 }
