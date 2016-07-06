@@ -1,3 +1,23 @@
+/*
+	This file is part of the Pattern scanner for OSX
+    Copyright (C) 2016 Gabriel Romon <mariemromon@yahoo.fr> 
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License version 3
+    as published by the Free Software Foundation. You may not use, modify
+    or distribute this program under any other version of the
+    GNU Affero General Public License.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  
+*/
+
+
 #include <cstdio>
 #include <cstdlib>
 #include <iostream>
@@ -101,7 +121,6 @@ void ClientToBuffer() {
 }
 
 uint64_t Scan(string s){
-    stringstream ss;
     bool flag = true;
     for (int j=0;j<(SizeClient-(s.size())/2 + 1);j++){
         flag = true;
@@ -142,7 +161,6 @@ uint64_t Scan(string s){
 
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
     ClientToBuffer();
     uint64_t LocalPlayerArr=Scan(LocalPlayer);
     uint64_t EntityArr=Scan(EntityList);
