@@ -168,14 +168,14 @@ int main(int argc, const char * argv[]) {
     uint64_t GlowArr=Scan(Glow);
     uint32_t int1 = (int)*((int*)(LocalPlayerArr-Client+buffer + 0x17));
     LocalPlayerArr = LocalPlayerArr + 0x1F + int1 - Client;
-    printf("%llx\n",LocalPlayerArr);
+    printf("LocalPlayer: %llx\n",LocalPlayerArr);
     uint32_t int2 = (int)*((int*)(EntityArr-Client+buffer + 0x22));
     uint64_t int3 = (uint64_t) *(uint64_t *)(EntityArr-Client+buffer + 0x26 + int2);
     EntityArr = int3 + 0x8 + 0x20 -Client;
-    printf("%llx\n",EntityArr);
+    printf("EntityList : %llx\n",EntityArr);
     uint32_t int4 = (int)*((int*)(GlowArr-Client+buffer + 0x22));
     GlowArr = GlowArr + 0x26 + int4 - Client;
-    printf("%llx\n",GlowArr);
+    printf("Glow: %llx\n",GlowArr);
     return 0;
 }
 
