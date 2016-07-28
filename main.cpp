@@ -30,7 +30,7 @@
 #include <libproc.h>
 #include <sys/stat.h>
 #include <string>
-
+#include <sstream>
 
 using namespace std;
 
@@ -43,7 +43,7 @@ uint8_t * buffer;
 
 string LocalPlayer = "4839DF74??4885FF74??4889DEE8????????EB??";
 string EntityList = "554889E54156534889FBBE??000000E8????????8B??????????83F8FF";
-string Glow = "48C7????e?2E05????????488D??????????488D??????????E8";
+string Glow = "488D3D7F????05E8????????85C00F84????????48C7??????????????????488D??????????";
 ////
 // copy client.dylib to our program memory
 ////
@@ -121,6 +121,7 @@ void ClientToBuffer() {
 }
 
 uint64_t Scan(string s){
+    stringstream ss;
     bool flag = true;
     for (int j=0;j<(SizeClient-(s.size())/2 + 1);j++){
         flag = true;
@@ -149,7 +150,7 @@ uint64_t Scan(string s){
             }
         }
         if (flag){
-            return j;
+            return (Client+j);
         }
     }
     return 0;
@@ -165,15 +166,16 @@ int main(int argc, const char * argv[]) {
     uint64_t LocalPlayerArr=Scan(LocalPlayer);
     uint64_t EntityArr=Scan(EntityList);
     uint64_t GlowArr=Scan(Glow);
-    uint32_t int1 = (int)*((int*)(LocalPlayerArr+buffer + 0x17));
-    LocalPlayerArr = LocalPlayerArr + 0x1F + int1;
-    printf("LocalPlayer: 0x%llx\n",LocalPlayerArr);
-    uint32_t int2 = (int)*((int*)(EntityArr+buffer + 0x22));
-    uint64_t int3 = (uint64_t) *(uint64_t *)(EntityArr+buffer + 0x26 + int2);
-    EntityArr = int3 + 0x8 + 0x20;
-    printf("EntityList: 0x%llx\n",EntityArr);
-    uint32_t int4 = (int)*((int*)(GlowArr+buffer + 0x2D));
-    GlowArr = GlowArr + 0x31 + int4 ;
-    printf("Glow: 0x%llx\n",GlowArr);
+    uint32_t int1 = (int)*((int*)(LocalPlayerArr-Client+buffer + 0x17));
+    LocalPlayerArr = LocalPlayerArr + 0x1F + int1 - Client;
+    printf("%llx\n",LocalPlayerArr);
+    uint32_t int2 = (int)*((int*)(EntityArr-Client+buffer + 0x22));
+    uint64_t int3 = (uint64_t) *(uint64_t *)(EntityArr-Client+buffer + 0x26 + int2);
+    EntityArr = int3 + 0x8 + 0x20 -Client;
+    printf("%llx\n",EntityArr);
+    uint32_t int4 = (int)*((int*)(GlowArr-Client+buffer + 0x22));
+    GlowArr = GlowArr + 0x26 + int4 - Client;
+    printf("%llx\n",GlowArr);
     return 0;
 }
+
