@@ -9,7 +9,7 @@ Credits for the patterns go to **owerosu**
 
 **Don't paste this in your P2C or I'll sue for copyright violation!**
 
-Someone kindly provided a step-by-step tutorial here https://www.youtube.com/watch?v=3kMyiZ5yuvE
+Here's a step-by-step tutorial https://www.youtube.com/watch?v=aP99mdDzwQk
 
 **Consequently, issues along the lines of  "I can't compile" and "I don't know how to run as root" will be deleted.**
 
